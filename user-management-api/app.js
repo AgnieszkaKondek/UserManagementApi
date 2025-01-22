@@ -1,36 +1,23 @@
 var express = require('express');
 var swaggerUi = require('swagger-ui-express');
-var swaggerDocument = require('./config/swagger.json'); 
+var swaggerDocument = require('./config/swagger'); 
 
+const authRoutes = require('./routes/auth'); 
 
-const sequelize = require('./config/database');
+app.use('/', authRoutes);
 
-sequelize
-  .authenticate()
-  .then(() => console.log('Połączono z bazą danych!'))
-  .catch(err => console.error('Błąd połączenia z bazą danych:', err));
-
-  
 var app = express();
-  
-// Middleware
+
 app.use(express.json()); 
 app.use(express.urlencoded({ extended: false })); 
 
-// Swagger UI (dokumentacja dostępna pod /api-docs)
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-// Główna trasa API (na przykładzie użytkowników)
-var usersRouter = require('./routes/users');
-app.use('/users', usersRouter);
-
-// Obsługa 404 (jeśli żądanie nie pasuje do żadnej ścieżki)
-app.use(function (req, res, next) {
+app.use(function ( res) {
   res.status(404).json({ error: 'Not Found' });
 });
 
-// Obsługa błędów
-app.use(function (err, req, res, next) {
+app.use(function (err, res) {
   res.status(err.status || 500).json({
     error: err.message || 'Internal Server Error',
   });

@@ -1,34 +1,31 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "User Management API",
-      "version": "1.0.0",
-      "description": "API do zarządzania użytkownikami"
-    },
-    "servers": [
-      {
-        "url": "http://localhost:3000",
-        "description": "Local server"
-      }
-    ],
-    "paths": {
-      "/users": {
-        "get": {
-          "summary": "Pobierz listę użytkowników",
-          "responses": {
-            "200": {
-              "description": "Lista użytkowników",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "id": { "type": "integer" },
-                        "name": { "type": "string" },
-                        "email": { "type": "string" }
-                      }
+  "openapi": "3.0.0",
+  "info": {
+    "title": "User Management API",
+    "version": "1.0.0",
+    "description": "API do zarządzania użytkownikami"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Local server"
+    }
+  ],
+  "paths": {
+    "/auth": {
+      "get": {
+        "summary": "Authentication",
+        "responses": {
+          "200": {
+            "description": "Token JWT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
                     }
                   }
                 }
@@ -38,5 +35,41 @@
         }
       }
     }
-  }
-  
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully added.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+                      "description": "JWT token generated for the added user."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Missing or invalid parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Email and role are required."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
