@@ -11,11 +11,43 @@
       "description": "Local server"
     }
   ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
   "paths": {
+    "/auth": {
+      "get": {
+        "summary": "Authentication",
+        "responses": {
+          "200": {
+            "description": "Token JWT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }}}}}},
     "/api/user": {
       "post": {
         "summary": "Create user",
         "description": "Creates a new user record in the database. User data should be based on request body.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
@@ -111,6 +143,11 @@
       "patch": {
         "summary": "Update user",
         "description": "Updates the user record in the database with data provided in the request body.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -227,6 +264,11 @@
       "delete": {
         "summary": "Remove user",
         "description": "Remove the user by ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "id",
@@ -279,6 +321,11 @@
       "get": {
         "summary": "Get all users",
         "description": "Returns an array of all users in the database. Users can be filtered by a role query parameter.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "role",

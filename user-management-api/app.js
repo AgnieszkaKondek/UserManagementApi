@@ -6,6 +6,7 @@ const addUserRoutes = require("./routes/user");
 const editUserRoutes = require("./routes/edit-user");
 const removeUserRoutes = require("./routes/remove-user");
 const getUserRoutes = require("./routes/users");
+const authRoutes = require('./routes/auth'); 
 
 var app = express();
 
@@ -15,6 +16,7 @@ app.use('/api/user', addUserRoutes);
 app.use('/api/user', editUserRoutes); 
 app.use('/api/user', removeUserRoutes); 
 app.use('/api/users', getUserRoutes);
+app.use('/',authRoutes);
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
