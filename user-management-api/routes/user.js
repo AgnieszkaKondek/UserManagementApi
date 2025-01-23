@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ message: "User with this email already exists." });
   }
 
-  await User.create({
+  const user = await User.create({
     email,
     firstName,
     lastName,
@@ -24,6 +24,7 @@ router.post('/', async (req, res) => {
 
   res.status(201).json({
     message: "User successfully created.",
+    user
   });
 });
 
