@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const authenticateToken = require("./authMiddleware");
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authenticateToken, async (req, res) => {
   const { id } = req.params;
   const { firstName, lastName, role } = req.body;
 
