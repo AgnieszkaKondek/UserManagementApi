@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user'); 
+const authenticateToken = require("./authMiddleware");
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
   const { role } = req.query; 
 
   try {

@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
+const authenticateToken = require("./authMiddleware");
 
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   const { email, firstName, lastName, role } = req.body;
 
   if (!email || !role) {
